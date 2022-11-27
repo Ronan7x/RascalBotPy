@@ -1,27 +1,36 @@
-import os
-from dotenv.main import load_dotenv
+import discord
 from discord.ext import commands
+import os
+from dotenv import load_dotenv
 
-def main():
-    client = commands.Bot(command_prefix="?")
+load_dotenv()
 
-    load_dotenv()
+intents = discord.Intents.all()
 
-    @client.event
-    async def on_ready():
-        print(f"{client.user.name} has connected to Discord.")
+client = discord.Client(intents=intents)
 
-    # @client.event
-    # async def on_message(message):
-    #     if (message.content.startswith("Hello")):
-    #         await message.channel.send(f"Hi {message.author.mention}!")
 
-    @client.command()
-    async def ping(ctx):
-        """Checks for a response from the bot"""
-        await ctx.send("Pong")
 
-    client.run(os.getenv("DISCORD_TOKEN"))
 
-if __name__ == '__main__':
-    main()
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    if message.content.startswith('!hello'):
+        await message.channel.send('Hello!')
+    if message.content.startswith('!help'):
+        await message.channel.send('no')
+    if '4chan' in message.content:
+        await message.channel.send(file=discord.File('images/pepebased.png'))
+    if 'gaslighting' in message.content: 
+        await message.channel.send('Gaslighting??? whats that?? what are you talking about? stop making up words.')
+
+
+
+
+client.run(os.getenv('TOKEN'))
