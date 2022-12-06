@@ -1,5 +1,5 @@
 # RascalBotPy
-#test repo
+# test repo
 
 A discord bot i made to manage my server. This is so I don't have to rely on other peoples bots (this is the pythob version)
 
